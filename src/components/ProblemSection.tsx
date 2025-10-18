@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProblemSection() {
   return (
-    <div className="bg-gray-900 text-gray-300 antialiased">
+    <div id="problem" className="bg-gray-900 text-gray-300 antialiased">
       <div className="container mx-auto px-4 py-16 md:py-24">
         {/* Date line, styled like the reference image but with dark theme colors */}
         <div className="max-w-2xl mx-auto text-left mb-12 md:mb-16">
