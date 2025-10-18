@@ -29,7 +29,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
   };
 
   const navLinks = [
-    { href: "#problem", label: "The Problem" },
+    { href: "#problem", label: "Problem" },
     { href: "#solution", label: "Solution" },
     { href: "#departments", label: "Use Cases" },
     { href: "#faq", label: "FAQ" },
@@ -140,7 +140,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
         {/* CTA Button */}
         <motion.a
-          href="https://cal.com/nguyen-jin-f1iwjw/30min"
+          href="https://cal.com/jin-nguyen-awex4y/30min"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:inline-block"
@@ -217,7 +217,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
                   </motion.a>
                 ))}
                 <motion.a
-                  href="https://cal.com/nguyen-jin-f1iwjw/30min"
+                  href="https://cal.com/jin-nguyen-awex4y/30min"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"

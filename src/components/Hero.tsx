@@ -224,7 +224,7 @@ You're About To Discover The Way To Deploy Your Own AI Employees To Automate You
               </Button>
             </motion.div>
           </a>
-          <a href="https://cal.com/nguyen-jin-f1iwjw/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+          <a href="https://cal.com/jin-nguyen-awex4y/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
             <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
