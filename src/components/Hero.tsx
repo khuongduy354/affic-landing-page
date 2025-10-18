@@ -14,9 +14,9 @@ const Hero = () => {
       transition: {
         staggerChildren: 0.2,
         delayChildren: 0.1,
-        when: "beforeChildren"
-      }
-    }
+        when: "beforeChildren",
+      },
+    },
   };
 
   const itemVariants: Variants = {
@@ -27,9 +27,9 @@ const Hero = () => {
       transition: {
         type: "spring",
         stiffness: 100,
-        damping: 10
-      }
-    }
+        damping: 10,
+      },
+    },
   };
 
   const imageVariants: Variants = {
@@ -41,9 +41,9 @@ const Hero = () => {
         type: "spring",
         stiffness: 100,
         damping: 20,
-        delay: 0.2
-      }
-    }
+        delay: 0.2,
+      },
+    },
   };
 
   const buttonVariants: Variants = {
@@ -55,20 +55,20 @@ const Hero = () => {
         type: "spring",
         stiffness: 100,
         damping: 10,
-        delay: 0.6
-      }
+        delay: 0.6,
+      },
     },
     hover: {
       scale: 1.05,
       transition: {
         type: "spring",
         stiffness: 400,
-        damping: 10
-      }
+        damping: 10,
+      },
     },
     tap: {
-      scale: 0.95
-    }
+      scale: 0.95,
+    },
   };
   const words = ["Team", "Department", "Business"];
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
@@ -114,7 +114,6 @@ const Hero = () => {
 
   // Animation variants for staggered entrance
 
-
   const titleVariants: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -137,9 +136,8 @@ const Hero = () => {
     },
   };
 
-
   return (
-    <motion.section 
+    <motion.section
       ref={sectionRef}
       className="relative hero-glow h-screen flex items-center justify-center snap-start snap-always text-center"
       variants={containerVariants}
@@ -188,27 +186,31 @@ const Hero = () => {
         >
           <div className="flex items-center gap-2 flex-wrap justify-center">
             <span>Build Your Own</span>
-        
           </div>
           <div className="block">
-                <span className="gradient-text inline-flex items-center">
-               {currentText} 
-              <span className={`ml-1 ${isPaused ? "opacity-0" : "animate-blink"}`}>|</span>
+            <span className="gradient-text inline-flex items-center">
+              {currentText}
+              <span
+                className={`ml-1 ${isPaused ? "opacity-0" : "animate-blink"}`}
+              >
+                |
+              </span>
             </span>
             <br />
             <span className="text-2xl md:text-3xl font-medium text-muted-foreground"></span>
             "In Just 5 minutes with A2A"
           </div>
         </motion.h1>
-        
+
         <motion.p
           className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto"
           variants={paragraphVariants}
         >
-          
-You're About To Discover The Way To Deploy Your Own AI Employees To Automate Your Boring, Complex Daily Tasks Without Any Technical Skill or Strong Business Background.
+          You're about to discover the way to deploy your own ai employees to
+          automate your boring, complex daily tasks without any technical skill
+          or strong business background.
         </motion.p>
-        
+
         <motion.div
           className="mt-10 flex flex-col sm:flex-row justify-center items-center gap-4"
           variants={buttonVariants}
@@ -219,18 +221,30 @@ You're About To Discover The Way To Deploy Your Own AI Employees To Automate You
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Button size="lg" className="w-full sm:w-auto shadow-lg shadow-primary/20">
+              <Button
+                size="lg"
+                className="w-full sm:w-auto shadow-lg shadow-primary/20"
+              >
                 Claim Your First AI Team
               </Button>
             </motion.div>
           </a>
-          <a href="https://cal.com/jin-nguyen-awex4y/30min" target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto">
+          <a
+            href="https://cal.com/jin-nguyen-awex4y/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto"
+          >
             <motion.div
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+              <Button
+                variant="secondary"
+                size="lg"
+                className="w-full sm:w-auto"
+              >
                 Book a Free Demo
               </Button>
             </motion.div>

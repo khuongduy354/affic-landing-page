@@ -19,54 +19,44 @@ export default function ProblemSection() {
         {/* Content starts here */}
         <div className="max-w-2xl mx-auto text-left space-y-8 text-xl md:text-2xl font-medium tracking-tight text-white">
           <p>Hey CEOs, Managers and Entrepreneurs.</p>
-          <p>Let’s Get Real.</p>
+          <p>Let’s get real.</p>
           <p>
-            Are you tired of playing with “AI toys” that look cool but never
-            actually get real work done?
+            Are you tired of using tons of AI tools that look impressive but
+            don’t deliver real results?
           </p>
 
           <div className="pt-4">
-            <p className="font-bold text-blue-400">Sick of:</p>
+            <p className="font-bold text-blue-400">You:</p>
             <div className="space-y-6 text-gray-400 mt-4 pl-4 border-l-2 border-blue-700">
-              <p>Wasting hours to manage tools that break every week?</p>
-              <p>Getting stuck on weird errors you can’t even Google?</p>
-              <p>
-                Paying agencies a fortune for “automation” that never works?
-              </p>
+              <p>Waste hours to manage tools that break every week?</p>
+              <p>Get stuck on weird errors you can’t even Google?</p>
+              <p>Spend lots of money on “automation” that never works?</p>
             </div>
           </div>
 
-          {/* "You know the pain" section with similar styling */}
-          <div className="pt-4">
-            <p className="font-bold text-blue-400">You know the pain:</p>
-            <div className="space-y-6 text-gray-400 mt-4 pl-4 border-l-2 border-blue-700">
-              <p>Your “automation” turns into a full-time job just to fix.</p>
-              <p>You’re drowning in tools, workflows, and mystery errors.</p>
-              <p>It’s exhausting. It’s expensive. It’s broken.</p>
-            </div>
-          </div>
+          <p>It’s exhausting. It’s expensive. It’s broken.</p>
 
           <div className="pt-8 space-y-6">
             <p className="font-bold uppercase text-amber-400">
-              HERE’S THE UGLY TRUTH:
+              Here is the truth:
             </p>
             <p>AI and Tools aren't the problem.</p>
             <p className="font-extrabold text-blue-300">
-              Disconnected tools are.
+              Disconnected agents are.
             </p>
           </div>
 
           <div className="space-y-6">
             <p>
-              You’re making solo agents play in an orchestra with no conductor.
+              When your agents work alone, they miss context and keep giving
+              outputs you have to fix.
             </p>
             <p className="font-semibold text-blue-300">It’s chaos.</p>
           </div>
 
           <div className="pt-8 space-y-6">
-            <p>Thousands of “cool tools” promise automation heaven.</p>
             <p>
-              But you don’t need more tools — you need a{" "}
+              You don’t need more tools - you need a{" "}
               <span className="font-bold text-blue-300">team.</span>
             </p>
             <p>A team that actually works together.</p>

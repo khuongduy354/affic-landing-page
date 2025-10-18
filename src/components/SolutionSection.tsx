@@ -119,9 +119,7 @@ export default function SolutionSection() {
             variants={itemVariants}
             whileHover={cardHoverAnimation}
           >
-            <h3 className="text-2xl font-bold text-danger mb-4">
-              The Old, Broken Way
-            </h3>
+            <h3 className="text-2xl font-bold text-danger mb-4">The Old Way</h3>
             <motion.ul className="space-y-4">
               {oldWay.map((item, index) => (
                 <motion.li
