@@ -28,38 +28,49 @@ export default function ProblemSection() {
           <div className="pt-4">
             <p className="font-bold text-blue-400">You:</p>
             <div className="space-y-6 text-gray-400 mt-4 pl-4 border-l-2 border-blue-700">
-              <p>Waste hours to manage tools that break every week?</p>
-              <p>Get stuck on weird errors you can’t even Google?</p>
-              <p>Spend lots of money on “automation” that never works?</p>
+              <p>Spend hours juggling multiple tools.</p>
+              <p>Copy results from one to another just to make things work.</p>
+              <p>
+                Re-prompt your AI every single time as if you're training a new
+                one from scratch.
+              </p>
+              <p>Watch your "automations" fail the moment one piece breaks.</p>
             </div>
           </div>
 
-          <p>It’s exhausting. It’s expensive. It’s broken.</p>
+          <p>It's frustrating. It's messy. It's not scalable.</p>
 
           <div className="pt-8 space-y-6">
             <p className="font-bold uppercase text-amber-400">
               Here is the truth:
             </p>
-            <p>AI and Tools aren't the problem.</p>
+            <p>The real problem is not the tools or AI you're using.</p>
             <p className="font-extrabold text-blue-300">
-              Disconnected agents are.
+              It's the disconnection between them.
             </p>
           </div>
 
           <div className="space-y-6">
             <p>
-              When your agents work alone, they miss context and keep giving
-              outputs you have to fix.
+              Each tools works alone. No context, no shared memory, no
+              coordination.
             </p>
-            <p className="font-semibold text-blue-300">It’s chaos.</p>
+            <p>So you keep fixing what they break.</p>
+            <p className="font-semibold text-blue-300">
+              That's not automation. That’s chaos.
+            </p>
           </div>
 
           <div className="pt-8 space-y-6">
+            <p>That is why...</p>
             <p>
               You don’t need more tools - you need a{" "}
-              <span className="font-bold text-blue-300">team.</span>
+              <span className="font-bold text-blue-300">Organization.</span>
             </p>
-            <p>A team that actually works together.</p>
+            <p>
+              An organization where your AIs can perform complex tasks and
+              communicate effectively with others.
+            </p>
           </div>
 
           <div className="pt-8 space-y-6">
@@ -78,9 +89,13 @@ export default function ProblemSection() {
               Agents that think, talk, and work together through our{" "}
               <strong className="text-white">A2A technology.</strong>
             </p>
-            <p>
+            {/* <p>
               They’re pre-trained, fully synced, and ready to perform from day
               one.
+            </p> */}
+            <p>
+              So you don't manage tools anymore, you start leading an AI
+              Organization that runs itself.
             </p>
           </div>
 
