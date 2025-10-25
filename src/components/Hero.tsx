@@ -206,7 +206,7 @@ const Hero = () => {
           className="text-lg md:text-xl text-muted-foreground mt-6 max-w-2xl mx-auto"
           variants={paragraphVariants}
         >
-          You're about to discover the way to deploy your own ai employees to
+          You're about to discover the way to deploy your own AI employees to
           automate your boring, complex daily tasks without any technical skill
           or strong business background.
         </motion.p>
