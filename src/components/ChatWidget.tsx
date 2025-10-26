@@ -1,12 +1,12 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, X, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { MessageSquare, X, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // --- NEW: Typing Indicator Component ---
 // --- MỚI: Component chỉ báo đang gõ ---
 const TypingIndicator = () => (
-  <motion.div 
+  <motion.div
     className="flex items-center gap-1.5 p-2"
     initial="initial"
     animate="animate"
@@ -14,7 +14,7 @@ const TypingIndicator = () => (
     variants={{
       initial: { opacity: 0 },
       animate: { opacity: 1, transition: { staggerChildren: 0.2 } },
-      exit: { opacity: 0 }
+      exit: { opacity: 0 },
     }}
   >
     {[...Array(3)].map((_, i) => (
@@ -29,7 +29,7 @@ const TypingIndicator = () => (
           duration: 1.2,
           repeat: Infinity,
           ease: "easeInOut",
-          delay: i * 0.2
+          delay: i * 0.2,
         }}
       />
     ))}
@@ -39,21 +39,32 @@ const TypingIndicator = () => (
 // Define the structure for a chat message
 type ChatMessage = {
   id: string;
-  role: 'user' | 'bot' | 'error';
+  role: "user" | "bot" | "error";
   // Text can now be a string or a React component (for the typing indicator)
   text: string | React.ReactNode;
 };
 
 // Your webhook URL
-const CHAT_WEBHOOK = 'https://tools.munnandaffiliates.com/webhook/1d622d07-3ae2-4820-8b74-4e53ce0469cb/chat';
+const CHAT_WEBHOOK =
+  "https://tools.munnandaffiliates.com/webhook/1d622d07-3ae2-4820-8b74-4e53ce0469cb/chat";
 
 const ChatWidget = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Generate UUID v4
+  const generateUUID = (): string => {
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+      const r = (Math.random() * 16) | 0;
+      const v = c === "x" ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  };
 
   // Focus input when the chat opens
   useEffect(() => {
@@ -64,22 +75,26 @@ const ChatWidget = () => {
 
   // Automatically scroll to the latest message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   const parseStreamingResponse = (rawText: string): string => {
     try {
-      const lines = rawText.trim().split('\n');
+      const lines = rawText.trim().split("\n");
       const contentParts: string[] = [];
-      lines.forEach(line => {
+      lines.forEach((line) => {
         try {
           const json = JSON.parse(line);
-          if (json.type === 'item' && json.content) {
+          if (json.type === "item" && json.content) {
             contentParts.push(json.content);
           }
-        } catch (e) { /* Ignore invalid JSON lines */ }
+        } catch (e) {
+          /* Ignore invalid JSON lines */
+        }
       });
-      return contentParts.length > 0 ? contentParts.join('') : "Received a response, but couldn't extract the message.";
+      return contentParts.length > 0
+        ? contentParts.join("")
+        : "Received a response, but couldn't extract the message.";
     } catch (e) {
       return rawText;
     }
@@ -89,9 +104,16 @@ const ChatWidget = () => {
     const trimmedInput = input.trim();
     if (!trimmedInput || isSending) return;
 
+    // Generate session ID if it doesn't exist
+    let currentSessionId = sessionId;
+    if (!currentSessionId) {
+      currentSessionId = generateUUID();
+      setSessionId(currentSessionId);
+    }
+
     const userMessage: ChatMessage = {
       id: `user-${Date.now()}`,
-      role: 'user',
+      role: "user",
       text: trimmedInput,
     };
 
@@ -100,27 +122,33 @@ const ChatWidget = () => {
     const botPlaceholderId = `bot-placeholder-${Date.now()}`;
     const botPlaceholderMessage: ChatMessage = {
       id: botPlaceholderId,
-      role: 'bot',
+      role: "bot",
       text: <TypingIndicator />,
     };
 
     setMessages((prev) => [...prev, userMessage, botPlaceholderMessage]);
-    setInput('');
+    setInput("");
     setIsSending(true);
 
     try {
       const response = await fetch(CHAT_WEBHOOK, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chatInput: trimmedInput }),
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chatInput: trimmedInput,
+          sessionId: currentSessionId,
+        }),
       });
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Server returned an error: ${response.status} - ${errorText}`);
+        throw new Error(
+          `Server returned an error: ${response.status} - ${errorText}`
+        );
       }
-      
+
       const rawText = await response.text();
+      console.debug("Raw streaming response:", rawText);
       const botReply = parseStreamingResponse(rawText);
 
       // --- STREAMING EFFECT LOGIC ---
@@ -130,14 +158,19 @@ const ChatWidget = () => {
           msg.id === botPlaceholderId ? { ...msg, text: botReply } : msg
         )
       );
-
     } catch (error: any) {
       // --- STREAMING EFFECT LOGIC ---
       // 3. Update the placeholder with an error message if something fails
       setMessages((prev) =>
         prev.map((msg) =>
           msg.id === botPlaceholderId
-            ? { ...msg, role: 'error', text: error.message || 'Failed to connect. Please check the console.' }
+            ? {
+                ...msg,
+                role: "error",
+                text:
+                  error.message ||
+                  "Failed to connect. Please check the console.",
+              }
             : msg
         )
       );
@@ -147,7 +180,7 @@ const ChatWidget = () => {
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !isSending) {
+    if (e.key === "Enter" && !isSending) {
       handleSendMessage();
     }
   };
@@ -161,7 +194,7 @@ const ChatWidget = () => {
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
             className="fixed bottom-24 right-4 sm:right-8 z-50 w-[90vw] max-w-sm h-[70vh] max-h-[600px] bg-card border border-border/30 rounded-2xl shadow-2xl flex flex-col"
           >
             {/* Chat Header */}
@@ -170,7 +203,10 @@ const ChatWidget = () => {
                 <MessageSquare className="h-5 w-5 text-primary" />
                 Affic AI Chat
               </h3>
-              <button onClick={() => setIsOpen(false)} className="p-1 rounded-full hover:bg-muted">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="p-1 rounded-full hover:bg-muted"
+              >
                 <X size={20} />
               </button>
             </div>
@@ -183,11 +219,21 @@ const ChatWidget = () => {
                 </div>
               )}
               {messages.map((msg) => (
-                <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`px-3 py-2 rounded-lg max-w-[80%] text-sm whitespace-pre-wrap break-words ${
-                      msg.role === 'user' ? 'bg-primary text-primary-foreground' :
-                      msg.role === 'bot' ? 'bg-muted text-foreground' : 'bg-destructive/20 text-destructive-foreground'
-                  }`}>
+                <div
+                  key={msg.id}
+                  className={`flex ${
+                    msg.role === "user" ? "justify-end" : "justify-start"
+                  }`}
+                >
+                  <div
+                    className={`px-3 py-2 rounded-lg max-w-[80%] text-sm whitespace-pre-wrap break-words ${
+                      msg.role === "user"
+                        ? "bg-primary text-primary-foreground"
+                        : msg.role === "bot"
+                        ? "bg-muted text-foreground"
+                        : "bg-destructive/20 text-destructive-foreground"
+                    }`}
+                  >
                     {msg.text}
                   </div>
                 </div>
@@ -212,7 +258,11 @@ const ChatWidget = () => {
                   onClick={handleSendMessage}
                   disabled={isSending || !input.trim()}
                 >
-                  {isSending ? <Loader2 className="w-4 h-4 animate-spin" /> : 'Send'}
+                  {isSending ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    "Send"
+                  )}
                 </Button>
               </div>
             </div>
@@ -230,7 +280,7 @@ const ChatWidget = () => {
       >
         <AnimatePresence mode="wait">
           <motion.div
-            key={isOpen ? 'close' : 'open'}
+            key={isOpen ? "close" : "open"}
             initial={{ opacity: 0, rotate: -30, scale: 0.5 }}
             animate={{ opacity: 1, rotate: 0, scale: 1 }}
             exit={{ opacity: 0, rotate: 30, scale: 0.5 }}
@@ -245,4 +295,3 @@ const ChatWidget = () => {
 };
 
 export default ChatWidget;
-
