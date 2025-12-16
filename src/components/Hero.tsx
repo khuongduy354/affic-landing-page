@@ -230,7 +230,7 @@ const Hero = () => {
             </motion.div>
           </a>
           <a
-            href="https://cal.com/jin-nguyen-awex4y/30min"
+            href="https://cal.com/jin-nguyen-affic-ai/30min?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExZVMxRFlvM0ZuWk9pOWpkQnNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR4vXT9sm2guCu6-xaDzFrak4EzaAiRFKRU8PgyyetEsIRTTjmgjzWCRs9UOnQ_aem_9xVI8JXsFwCoIagTEpDwkQ"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
