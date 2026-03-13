@@ -32,6 +32,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
     { href: "#problem", label: "Problem" },
     { href: "#solution", label: "Solution" },
     { href: "#departments", label: "Use Cases" },
+    { href: "#portfolio", label: "Portfolio" },
     { href: "#faq", label: "FAQ" },
   ];
 
