@@ -66,9 +66,10 @@ This project is set up to auto build and deploy to GitHub Pages via GitHub Actio
 
 - Trigger: push to `main`
 - Workflow file: `.github/workflows/deploy.yml`
+- Publish branch: `gh-pages`
 - Custom domain: `afficai.com` (via `public/CNAME`)
 
-Make sure your repository Pages source is set to **GitHub Actions** in repository settings.
+Make sure your repository Pages source is set to **Deploy from a branch** and branch **gh-pages / (root)**.
 
 ## Can I connect a custom domain?
 
