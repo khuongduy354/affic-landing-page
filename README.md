@@ -62,12 +62,16 @@ This project is built with:
 
 ## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/15ed5de0-8c88-4664-a2c9-631e119b799a) and click on Share -> Publish.
+This project is set up to auto build and deploy to GitHub Pages via GitHub Actions.
 
-## Can I connect a custom domain to my Lovable project?
+- Trigger: push to `main`
+- Workflow file: `.github/workflows/deploy.yml`
+- Custom domain: `afficai.com` (via `public/CNAME`)
 
-Yes, you can!
+Make sure your repository Pages source is set to **GitHub Actions** in repository settings.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Can I connect a custom domain?
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Yes. This project already includes `public/CNAME` with `afficai.com`.
+
+You still need DNS configured to point `afficai.com` to GitHub Pages.
