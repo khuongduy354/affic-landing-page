@@ -183,7 +183,7 @@ const CTASection = () => {
                     <p className="text-sm text-muted-foreground">
                       ...or{" "}
                       <a
-                        href="https://cal.com/nguyen-jin-f1iwjw/30min"
+                        href="https://cal.com/jin-nguyen-affic-ai/30min?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWEh0M3VOS3d3NDVnUHlxcHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR6f5yovgzKHsrXsBFAe6CYuL5256-UBRxBSh4lMJTmTbinEVcDR3LMSoaNDuw_aem_bWt3uWvgSBJCdg5dTwDxlg"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline hover:text-primary transition-colors"

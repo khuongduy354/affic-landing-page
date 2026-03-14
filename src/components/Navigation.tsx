@@ -141,7 +141,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
         {/* CTA Button */}
         <motion.a
-          href="https://cal.com/jin-nguyen-awex4y/30min"
+          href="https://cal.com/jin-nguyen-affic-ai/30min?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWEh0M3VOS3d3NDVnUHlxcHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR6crA86p2JL2aCw9-k8AhAWvlHzFvfUAmThiipKQ3HAJHBCwVpd23KK9NW0dQ_aem_MjLL-fKKfo-QLSBq_B2uKQ"
           target="_blank"
           rel="noopener noreferrer"
           className="hidden md:inline-block"
