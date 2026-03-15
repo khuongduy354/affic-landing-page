@@ -9,6 +9,8 @@ import {
   PartyPopper,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/translations";
 
 // --- NEW: Reusable Modal Component ---
 // --- MỚI: Component Modal có thể tái sử dụng ---
@@ -48,24 +50,12 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 const CTASection = () => {
-  const benefits = [
-    <>
-      A <strong>1-on-1 strategy session</strong> with a Top 10% AI Automation
-      Expert.
-    </>,
-    <>
-      <strong>Early access</strong> before public launch.
-    </>,
-    <>
-      <strong>Full access</strong> to all available A2A Departments at launch.
-    </>,
-    <>
-      A <strong>done-for-you setup</strong> so your AI Departments run smoothly.
-    </>,
-    <>
-      <strong>Dedicated support</strong> from our experts.
-    </>,
-  ];
+  const { t, lang } = useLanguage();
+
+  const benefits = translations.cta.benefits.map((b) => {
+    const data = b[lang];
+    return <>{data.pre}<strong>{data.bold}</strong>{data.post}</>;
+  });
 
   // --- NEW: State for modals and form handling ---
   const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
@@ -77,7 +67,7 @@ const CTASection = () => {
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email) {
-      setError("Please enter a valid email address.");
+      setError(t(translations.cta.emailError));
       return;
     }
     setError("");
@@ -122,20 +112,19 @@ const CTASection = () => {
                   {/* Left Column: Narrative Text */}
                   <div className="space-y-6">
                     <h2 className="text-3xl md:text-4xl font-bold text-foreground">
-                      Get in <span className="gradient-text">Early</span>
+                      {t(translations.cta.title)} <span className="gradient-text">{t(translations.cta.titleHighlight)}</span>
                     </h2>
                     <div className="space-y-4 text-muted-foreground text-lg">
                       <p>
-                        We're building collaborative AI squads{" "}
-                        <strong>that think, talk, and work together.</strong>
+                        {t(translations.cta.paragraph1)}{" "}
+                        <strong>{t(translations.cta.paragraph1Bold)}</strong>
                       </p>
                       <p>
-                        This early access program is designed for leaders who
-                        want to{" "}
+                        {t(translations.cta.paragraph2Pre)}{" "}
                         <strong>
-                          move fast, test early, and shape the next generation
+                          {t(translations.cta.paragraph2Bold)}
                         </strong>{" "}
-                        of intelligent automation.
+                        {t(translations.cta.paragraph2Post)}.
                       </p>
                     </div>
                   </div>
@@ -143,7 +132,7 @@ const CTASection = () => {
                   {/* Right Column: Benefits List */}
                   <div>
                     <h3 className="text-xl font-semibold text-foreground mb-6">
-                      When you pre-order, you'll get:
+                      {t(translations.cta.benefitsTitle)}
                     </h3>
                     <div className="space-y-4">
                       {benefits.map((benefit, index) => (
@@ -175,22 +164,22 @@ const CTASection = () => {
                       onClick={() => setIsEmailModalOpen(true)}
                     >
                       <span className="hidden sm:inline">
-                        PRE-ORDER NOW - Get 10% OFF at Launch
+                        {t(translations.cta.preOrderFull)}
                       </span>
-                      <span className="sm:hidden">PRE-ORDER - 10% OFF</span>
+                      <span className="sm:hidden">{t(translations.cta.preOrderShort)}</span>
                       <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                     </Button>
                     <p className="text-sm text-muted-foreground">
-                      ...or{" "}
+                      {t(translations.cta.orBook)}{" "}
                       <a
                         href="https://cal.com/nguyen-jin-f1iwjw/30min"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline hover:text-primary transition-colors"
                       >
-                        book a 30-minute demo
+                        {t(translations.cta.bookDemo)}
                       </a>{" "}
-                      to see how it works first.
+                      {t(translations.cta.toSee)}.
                     </p>
                   </div>
                 </div>
@@ -206,11 +195,10 @@ const CTASection = () => {
         onClose={() => setIsEmailModalOpen(false)}
       >
         <h3 className="text-xl font-semibold mb-2">
-          Claim Your Pre-Order Discount
+          {t(translations.cta.modalTitle)}
         </h3>
         <p className="text-muted-foreground mb-6">
-          Enter your email to secure your 10% off founder price. We'll notify
-          you on launch day.
+          {t(translations.cta.modalDesc)}
         </p>
         <form onSubmit={handleEmailSubmit} className="space-y-4">
           <div className="relative">
@@ -229,7 +217,7 @@ const CTASection = () => {
             {isSubmitting ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              "Submit & Claim Discount"
+              t(translations.cta.submitBtn)
             )}
           </Button>
         </form>
@@ -242,12 +230,11 @@ const CTASection = () => {
       >
         <div className="text-center">
           <PartyPopper className="w-12 h-12 text-primary mx-auto mb-4" />
-          <h3 className="text-xl font-semibold mb-2">Thank You!</h3>
+          <h3 className="text-xl font-semibold mb-2">{t(translations.cta.thankYou)}</h3>
           <p className="text-muted-foreground mb-6">
-            Your pre-order is confirmed! We've sent the 10% discount code to
-            your inbox. Welcome to the future of A2A.
+            {t(translations.cta.successMsg)}
           </p>
-          <Button onClick={() => setIsSuccessModalOpen(false)}>Close</Button>
+          <Button onClick={() => setIsSuccessModalOpen(false)}>{t(translations.cta.close)}</Button>
         </div>
       </Modal>
     </>

@@ -1,8 +1,11 @@
 import { Linkedin, Facebook, Mail, MapPin, Phone, FileText, BookOpen, Users, Building2 } from "lucide-react";
 // FIXED: Changed to a relative path to prevent build errors
 import logo from "../assets/Affic.AI Logo Footer.png";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/translations";
 
 const Footer = () => {
+  const { t } = useLanguage();
   return (
     <footer className="relative py-16 bg-gradient-to-b from-background/95 to-background border-t border-border/30">
       {/* Glassmorphism overlay */}
@@ -19,7 +22,7 @@ const Footer = () => {
                   </div>
               
               <p className="text-[15px] text-muted-foreground/90 max-w-sm leading-relaxed">
-                Affic AI is the no-code platform that empowers you to build and deploy an entire AI workforce. Our mission is to automate your business processes, freeing your team to focus on what matters most: innovation and growth.
+                {t(translations.footer.description)}
               </p>
 
               {/* Social Links with enhanced styling */}
@@ -59,13 +62,13 @@ const Footer = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {/* Company Links */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold tracking-tight bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">
-                  Company
+                <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                  {t(translations.footer.company)}
                 </h3>
                 <ul className="space-y-3">
                   {[
-                    { icon: Building2, text: "About Us" },
-                    { icon: BookOpen, text: "Blog" },
+                    { icon: Building2, text: t(translations.footer.aboutUs) },
+                    { icon: BookOpen, text: t(translations.footer.blog) },
                   ].map((item, index) => (
                     <li key={index}>
                       <a href="#" className="group flex items-center gap-2 text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
@@ -79,15 +82,15 @@ const Footer = () => {
 
               {/* Resources Links */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold tracking-tight bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">
-                  Resources
+                <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                  {t(translations.footer.resources)}
                 </h3>
                 <ul className="space-y-3">
                   {[
-                    "Documentation",
-                    "API Reference",
-                    "Integration Guide",
-                    "Case Studies"
+                    t(translations.footer.documentation),
+                    t(translations.footer.apiReference),
+                    t(translations.footer.integrationGuide),
+                    t(translations.footer.caseStudies)
                   ].map((text, index) => (
                     <li key={index}>
                       <a href="#" className="text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
@@ -100,8 +103,8 @@ const Footer = () => {
 
               {/* Contact Section */}
               <div className="space-y-4">
-                <h3 className="text-lg font-semibold tracking-tight bg-gradient-to-br from-white to-white/70 bg-clip-text text-transparent">
-                  Contact
+                <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                  {t(translations.footer.contact)}
                 </h3>
                 <ul className="space-y-3">
                   <li>
@@ -133,10 +136,10 @@ const Footer = () => {
         <div className="mt-16 pt-8 border-t border-border/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-sm text-muted-foreground/80">
-              &copy; Affic AI. All Rights Reserved.
+              &copy; Affic AI. {t(translations.footer.allRights)}
             </p>
             <div className="flex flex-wrap justify-center gap-8">
-              {["Privacy Policy", "Terms of Service", "Cookie Policy"].map((text, index) => (
+              {[t(translations.footer.privacyPolicy), t(translations.footer.termsOfService), t(translations.footer.cookiePolicy)].map((text, index) => (
                 <a
                   key={index}
                   href="#"
