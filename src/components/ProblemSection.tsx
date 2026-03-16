@@ -1,111 +1,79 @@
-import React from "react";
+import React, { useRef } from "react";
+import { Unplug, BarChart3, Puzzle } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/translations";
 
-export default function ProblemSection() {
+interface ProblemCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  index: number;
+}
+
+function ProblemCard({ icon, title, description, index }: ProblemCardProps) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-50px" });
+
   return (
-    <div id="problem" className="bg-gray-900 text-gray-300 antialiased">
-      <div className="container mx-auto px-4 py-16 md:py-24">
-        {/* Date line, styled like the reference image but with dark theme colors */}
-        <div className="max-w-2xl mx-auto text-left mb-12 md:mb-16">
-          <p className="text-sm text-gray-400">
-            Updated:{" "}
-            <span className="bg-blue-600/60 text-white px-2 py-1 rounded-md tracking-wide">
-              17th of October, 2025
-            </span>
-          </p>
-          <div className="h-0.5 bg-yellow-400 w-24 mt-2"></div>{" "}
-          {/* Highlight line */}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      className="bg-card border border-border rounded-xl p-8 hover:border-primary/30 transition-colors h-full md:border-r last:md:border-r-0"
+    >
+      <div className="flex flex-col gap-6">
+        <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+          {icon}
         </div>
-
-        {/* Content starts here */}
-        <div className="max-w-2xl mx-auto text-left space-y-8 text-xl md:text-2xl font-medium tracking-tight text-white">
-          <p>Hey CEOs, Managers and Entrepreneurs.</p>
-          <p>Let’s get real.</p>
-          <p>
-            Are you tired of using tons of AI tools that look impressive but
-            don’t deliver real results?
-          </p>
-
-          <div className="pt-4">
-            <p className="font-bold text-blue-400">You:</p>
-            <div className="space-y-6 text-gray-400 mt-4 pl-4 border-l-2 border-blue-700">
-              <p>Spend hours juggling multiple tools.</p>
-              <p>Copy results from one to another just to make things work.</p>
-              <p>
-                Re-prompt your AI every single time as if you're training a new
-                one from scratch.
-              </p>
-              <p>Watch your "automations" fail the moment one piece breaks.</p>
-            </div>
-          </div>
-
-          <p>It's frustrating. It's messy. It's not scalable.</p>
-
-          <div className="pt-8 space-y-6">
-            <p className="font-bold uppercase text-amber-400">
-              Here is the truth:
-            </p>
-            <p>The real problem is not the tools or AI you're using.</p>
-            <p className="font-extrabold text-blue-300">
-              It's the disconnection between them.
-            </p>
-          </div>
-
-          <div className="space-y-6">
-            <p>
-              Each tools works alone. No context, no shared memory, no
-              coordination.
-            </p>
-            <p>So you keep fixing what they break.</p>
-            <p className="font-semibold text-blue-300">
-              That's not automation. That’s chaos.
-            </p>
-          </div>
-
-          <div className="pt-8 space-y-6">
-            <p>That is why...</p>
-            <p>
-              You don’t need more tools - you need a{" "}
-              <span className="font-bold text-blue-300">Organization.</span>
-            </p>
-            <p>
-              An organization where your AIs can perform complex tasks and
-              communicate effectively with others.
-            </p>
-          </div>
-
-          <div className="pt-8 space-y-6">
-            <p>
-              That’s where <span className="text-amber-400 font-bold">we</span>{" "}
-              come in.
-            </p>
-            <p>
-              We don’t sell tools. We deliver{" "}
-              <strong className="text-white">Collaborative AI Teams.</strong>
-            </p>
-          </div>
-
-          <div className="space-y-6 text-gray-300">
-            <p>
-              Agents that think, talk, and work together through our{" "}
-              <strong className="text-white">A2A technology.</strong>
-            </p>
-            {/* <p>
-              They’re pre-trained, fully synced, and ready to perform from day
-              one.
-            </p> */}
-            <p>
-              So you don't manage tools anymore, you start leading an AI
-              Organization that runs itself.
-            </p>
-          </div>
-
-          <div className="pt-12 text-center space-y-4 font-bold tracking-wider">
-            <p className="text-blue-300">Plug them in.</p>
-            <p className="text-blue-300">Watch them work.</p>
-            <p className="text-amber-400">Get results.</p>
-          </div>
+        <div className="flex flex-col gap-3">
+          <h3 className="text-xl font-semibold text-foreground">{title}</h3>
+          <p className="text-muted-foreground leading-relaxed">{description}</p>
         </div>
       </div>
-    </div>
+    </motion.div>
+  );
+}
+
+export default function ProblemSection() {
+  const { t } = useLanguage();
+  const sectionRef = useRef(null);
+  const sectionInView = useInView(sectionRef, { once: true, margin: "-50px" });
+
+  const problems = translations.problem.cards.map((card, i) => ({
+    icon: [<Unplug className="w-6 h-6 text-foreground" />, <BarChart3 className="w-6 h-6 text-foreground" />, <Puzzle className="w-6 h-6 text-foreground" />][i],
+    title: t(card.title),
+    description: t(card.description),
+  }));
+
+  return (
+    <section id="problem" className="py-16 md:py-24 bg-background">
+      <div className="container mx-auto px-6">
+        <motion.div
+          ref={sectionRef}
+          initial={{ opacity: 0, y: 20 }}
+          animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className="mb-12 md:mb-16"
+        >
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground">
+            {t(translations.problem.title)}
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0">
+          {problems.map((problem, index) => (
+            <ProblemCard
+              key={problem.title}
+              icon={problem.icon}
+              title={problem.title}
+              description={problem.description}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

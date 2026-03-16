@@ -10,6 +10,8 @@ import {
 } from "lucide-react";
 import { motion, type Variants, useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { useLanguage } from "./LanguageProvider";
+import { translations } from "@/translations";
 import CardSwap, { Card } from "./CardSwap";
 import {
   Dialog,
@@ -20,166 +22,28 @@ import {
 } from "@/components/ui/dialog";
 import type { LucideIcon } from "lucide-react";
 
-interface Metric {
-  value: string;
-  label: string;
-}
-
-interface PortfolioItem {
-  icon: LucideIcon;
-  category: string;
-  title: string;
-  client: string;
-  description: string;
-  challenge: string;
-  solution: string;
-  metrics: Metric[];
-}
-
-const portfolioItems: PortfolioItem[] = [
-  {
-    icon: Plane,
-    category: "Operations",
-    title: "Flight Data Processing & Strategic Reporting",
-    client: "ACV — Vietnam Airports Corporation",
-    description:
-      "Agentic AI system that fully automates flight data processing, Excel reporting, and self-QA — replacing manual work from 3 full-time analysts.",
-    challenge:
-      "ACV processes 100-200 flights daily across international and domestic routes. Three full-time data analysts spent days manually compiling Excel reports for leadership — with zero tolerance for errors in strategic decisions.",
-    solution:
-      "Built a Multi-Agentic AI system with a Supervisory Agent that orchestrates data extraction, report generation, and automated QA. A self-healing mechanism cross-checks outputs against source data and auto-corrects until 100% accuracy. Controlled entirely via Telegram chat.",
-    metrics: [
-      { value: "100%", label: "Automation" },
-      { value: "200", label: "Flights/Day" },
-      { value: "3", label: "Analysts Replaced" },
-    ],
-  },
-  {
-    icon: Star,
-    category: "Operations",
-    title: "Google Review Management & Insights",
-    client: "Auberge du Dragon Rouge & Skyethgroup",
-    description:
-      "AI-powered system that auto-responds to Google reviews with brand-consistent replies and generates weekly staff performance reports.",
-    challenge:
-      "Multi-location F&B chains struggled to maintain brand voice across hundreds of Google reviews while extracting actionable operational insights for staff coaching and service improvements.",
-    solution:
-      "Deployed an AI review responder trained on each brand's tone and guidelines, generating contextual replies in real-time. A parallel analytics engine produces weekly performance reports with staff-level insights and trend analysis.",
-    metrics: [
-      { value: "Real-time", label: "Responses" },
-      { value: "Multi", label: "Locations" },
-      { value: "Weekly", label: "AI Insights" },
-    ],
-  },
-  {
-    icon: MessageSquare,
-    category: "Sales / CRM",
-    title: "WhatsApp AI Agent + Bitrix24 CRM",
-    client: "MarketBloom & Globe Life Insurance",
-    description:
-      "Pre-sales AI agent that handles outbound WhatsApp conversations, qualifies leads, and syncs everything to Bitrix24 CRM automatically.",
-    challenge:
-      "Sales teams were manually copy-pasting messages to hundreds of WhatsApp leads daily. Lead qualification was inconsistent, and CRM updates lagged behind actual conversations — causing lost deals.",
-    solution:
-      "Built a conversational AI agent integrated with WhatsApp API that handles natural dialogue, scores leads by intent signals, and auto-syncs summaries, tags, and follow-up tasks directly into Bitrix24 CRM in real-time.",
-    metrics: [
-      { value: "500+", label: "Chats/Day" },
-      { value: "2-3%", label: "Conversion Lift" },
-      { value: "24/7", label: "Active" },
-    ],
-  },
-  {
-    icon: Mail,
-    category: "Sales B2B",
-    title: "Cold Email Outreach with Hyper-Personalization",
-    client: "Salman Baig — Head of SEO @ Alibaba Group",
-    description:
-      "Agentic system that scrapes prospect websites, identifies pain points, writes personalized emails, and self-optimizes campaigns via A/B testing.",
-    challenge:
-      "Selling high-ticket Technical SEO services via cold email meant competing against generic templates that B2B buyers immediately ignore. Email verification tools and copywriting added massive ongoing costs.",
-    solution:
-      "Created an agentic pipeline that scrapes prospect websites for real pain points, generates hyper-personalized email sequences, and self-optimizes via A/B testing. A zero-cost verification engine monitors Gmail bounces to keep lists clean without third-party API fees.",
-    metrics: [
-      { value: "70%", label: "Open Rate" },
-      { value: "4%", label: "Reply Rate" },
-      { value: "80%", label: "Cost Reduction" },
-    ],
-  },
-  {
-    icon: Video,
-    category: "Content",
-    title: "AI Video Production & Distribution",
-    client: "Globe Life Insurance",
-    description:
-      "End-to-end automated pipeline that generates sales videos and distributes them across Instagram — from script to publish, zero manual effort.",
-    challenge:
-      "Creating daily sales video content required coordinating scriptwriters, editors, and social media managers — an expensive, slow process that couldn't scale for consistent daily publishing.",
-    solution:
-      "Engineered a fully automated pipeline: AI generates scripts from product data, produces video assets, and publishes directly to Instagram on schedule. The entire workflow from concept to live post runs with zero human intervention.",
-    metrics: [
-      { value: "Fully", label: "Automated" },
-      { value: "Script→Post", label: "Pipeline" },
-      { value: "Daily", label: "Output" },
-    ],
-  },
-  {
-    icon: Linkedin,
-    category: "Content",
-    title: "LinkedIn Content Automation",
-    client: "Railsafe Balustrading — CEO Steven Poole",
-    description:
-      "AI system that researches industry trends, writes authority-building LinkedIn posts, and publishes on schedule to grow the CEO's personal brand.",
-    challenge:
-      "The CEO wanted to build thought leadership on LinkedIn but couldn't dedicate hours weekly to research trends, craft posts, and maintain a consistent publishing schedule alongside running the business.",
-    solution:
-      "Built an AI content engine that researches B2B industry trends, generates authority-building posts matching the CEO's voice, and publishes on a managed schedule. Engagement increased 20-50% with zero manual effort.",
-    metrics: [
-      { value: "20-50%", label: "Engagement Lift" },
-      { value: "Auto", label: "Research" },
-      { value: "Scheduled", label: "Publishing" },
-    ],
-  },
-  {
-    icon: FileText,
-    category: "Content",
-    title: "AI Blog SEO & Dynamic Layout Management",
-    client: "Multikraft Australia — Biotech / Agriculture",
-    description:
-      "Automated SEO blog pipeline that researches keywords, writes optimized articles, and manages dynamic page layouts for organic growth.",
-    challenge:
-      "A biotech company needed consistent, high-quality SEO content but lacked in-house copywriters, SEO specialists, or designers. Manual blog production was too slow to compete for organic search rankings.",
-    solution:
-      "Deployed a full AI content pipeline: keyword research, SEO-optimized article generation, intelligent image selection, and dynamic page layout management. Each post looks hand-crafted by a professional editor — published automatically 24/7.",
-    metrics: [
-      { value: "SEO", label: "Optimized" },
-      { value: "Auto", label: "Published" },
-      { value: "80%", label: "Cost Savings" },
-    ],
-  },
-  {
-    icon: Search,
-    category: "Marketing",
-    title: "Omni-Channel Social Media Intelligence",
-    client: "Affic AI — Internal R&D Tool",
-    description:
-      "Deep research tool that mines Facebook Ads, YouTube transcripts, and Reddit threads to extract structured competitive intelligence as JSON.",
-    challenge:
-      "Competitive research across multiple social platforms was fragmented and manual — analysts spent hours jumping between Facebook Ads Library, YouTube, and Reddit to piece together market intelligence.",
-    solution:
-      "Built an omni-channel deep research tool that automatically mines Facebook Ads, extracts YouTube transcript insights, and scrapes Reddit threads — outputting perfectly structured JSON that feeds directly into other AI agents for content, strategy, and analysis.",
-    metrics: [
-      { value: "Multi", label: "Platform" },
-      { value: "JSON", label: "Structured Output" },
-      { value: "Real-time", label: "Intelligence" },
-    ],
-  },
-];
+const icons = [Plane, Star, MessageSquare, Mail, Video, Linkedin, FileText, Search];
 
 export default function PortfolioSection() {
+  const { t } = useLanguage();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const portfolioItems = translations.portfolio.items.map((item, i) => ({
+    icon: icons[i],
+    category: t(item.category),
+    title: t(item.title),
+    client: t(item.client),
+    description: t(item.description),
+    challenge: t(item.challenge),
+    solution: t(item.solution),
+    metrics: item.metrics.map((m) => ({
+      value: m.value,
+      label: t(m.label),
+    })),
+  }));
 
   const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -224,15 +88,14 @@ export default function PortfolioSection() {
               className="text-3xl md:text-4xl font-bold text-foreground"
               variants={itemVariants}
             >
-              Real Results. <br />
-              <span className="gradient-text">Real Clients.</span>
+              {t(translations.portfolio.title1)} <br />
+              <span className="gradient-text">{t(translations.portfolio.title2)}</span>
             </motion.h2>
             <motion.p
               className="text-muted-foreground max-w-md mt-4"
               variants={itemVariants}
             >
-              From aviation giants to global e-commerce leaders — here's how
-              our Agentic AI systems are already transforming businesses.
+              {t(translations.portfolio.subtitle)}
             </motion.p>
           </motion.div>
 
@@ -357,7 +220,7 @@ export default function PortfolioSection() {
               <div className="space-y-5 mt-2">
                 <div>
                   <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-2">
-                    The Challenge
+                    {t(translations.portfolio.theChallenge)}
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {selected.challenge}
@@ -366,7 +229,7 @@ export default function PortfolioSection() {
 
                 <div>
                   <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-2">
-                    Our Solution
+                    {t(translations.portfolio.ourSolution)}
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">
                     {selected.solution}
@@ -375,7 +238,7 @@ export default function PortfolioSection() {
 
                 <div className="pt-3 border-t border-border/50">
                   <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
-                    Key Results
+                    {t(translations.portfolio.keyResults)}
                   </h4>
                   <div className="grid grid-cols-3 gap-3">
                     {selected.metrics.map((metric, i) => (

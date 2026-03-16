@@ -7,55 +7,89 @@
     @apply scroll-smooth;
     height: 100%;
   }
-  
+
   body {
     @apply overflow-x-hidden;
     height: 100%;
   }
 }
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
+  /* Light theme (default) */
   :root {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 90%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 9%;
 
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 90%;
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 9%;
 
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 90%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 9%;
 
-    --primary: 199 89% 61%;
+    --primary: 152 76% 36%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 251 91% 77%;
-    --secondary-foreground: 0 0% 100%;
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 9%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 64%;
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 199 89% 61%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 0 0% 96%;
+    --accent-foreground: 0 0% 9%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
-    --ring: 199 89% 61%;
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 152 76% 36%;
 
     --radius: 0.75rem;
 
-    /* Custom A2A tokens */
-    --gradient-start: 199 89% 61%;
-    --gradient-end: 251 91% 77%;
-    --hero-glow: 199 89% 61%;
+    --gradient-start: 152 76% 36%;
+    --gradient-end: 199 89% 42%;
+    --hero-glow: 152 76% 36%;
     --danger: 0 84% 60%;
-    --success: 142 71% 45%;
+    --success: 152 76% 36%;
+    --warning: 38 92% 50%;
+  }
+
+  /* Dark theme */
+  .dark {
+    --background: 0 0% 7%;
+    --foreground: 0 0% 93%;
+
+    --card: 0 0% 11%;
+    --card-foreground: 0 0% 93%;
+
+    --popover: 0 0% 11%;
+    --popover-foreground: 0 0% 93%;
+
+    --primary: 152 76% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 15%;
+    --secondary-foreground: 0 0% 93%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 64%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 0 0% 93%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 18%;
+    --ring: 152 76% 42%;
+
+    --gradient-start: 152 76% 48%;
+    --gradient-end: 199 89% 55%;
+    --hero-glow: 152 76% 42%;
+    --danger: 0 84% 60%;
+    --success: 152 76% 42%;
     --warning: 38 92% 50%;
   }
 }
@@ -78,7 +112,7 @@ All colors MUST be HSL.
   }
 
   .hero-glow {
-    background-image: radial-gradient(circle at top, hsl(var(--hero-glow) / 0.1) 0%, transparent 40%);
+    background-image: radial-gradient(circle at top, hsl(var(--hero-glow) / 0.08) 0%, transparent 50%);
   }
 }
 
