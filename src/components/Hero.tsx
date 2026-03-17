@@ -12,6 +12,7 @@ import { useLanguage } from "./LanguageProvider";
 import { translations } from "@/translations";
 
 const Hero = () => {
+  const isStaticMarkup = typeof window === "undefined";
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true });
   const { t, tArr } = useLanguage();
@@ -161,8 +162,8 @@ const Hero = () => {
       ref={sectionRef}
       className="relative py-20 md:py-32 text-center"
       variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      initial={isStaticMarkup ? false : "hidden"}
+      animate={isStaticMarkup || isInView ? "visible" : "hidden"}
     >
       {/* Animated Background Blobs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -197,7 +198,7 @@ const Hero = () => {
       <motion.div
         className="container mx-auto px-6 relative z-10 max-w-4xl"
         variants={containerVariants}
-        initial="hidden"
+        initial={isStaticMarkup ? false : "hidden"}
         animate="visible"
       >
         {/* Main Headline */}
@@ -248,7 +249,7 @@ const Hero = () => {
             </Button>
           </motion.a>
           <motion.a
-            href="#features"
+            href="#portfolio"
             whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -300,7 +301,7 @@ const Hero = () => {
           {/* Tab Description - animates on tab change */}
           <motion.p
             key={activeTab}
-            initial={{ opacity: 0, y: 10 }}
+            initial={isStaticMarkup ? false : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}
             className="text-lg text-muted-foreground"
@@ -311,7 +312,7 @@ const Hero = () => {
           {/* Workflow Mockup Card - persists across tabs */}
           <motion.div
             className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-2xl shadow-primary/5"
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={isStaticMarkup ? false : { opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >
@@ -324,7 +325,7 @@ const Hero = () => {
               </div>
               <motion.span
                 key={`title-${activeTab}`}
-                initial={{ opacity: 0 }}
+                initial={isStaticMarkup ? false : { opacity: 0 }}
                 animate={{ opacity: 1 }}
                 className="text-xs font-medium text-muted-foreground"
               >

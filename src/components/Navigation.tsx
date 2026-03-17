@@ -4,6 +4,7 @@ import logo from "@/assets/affic-ai-logo.png";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence, type Variants } from "framer-motion";
+import { useLocation } from "react-router-dom";
 import { useTheme } from "./ThemeProvider";
 import { useLanguage } from "./LanguageProvider";
 import { translations } from "@/translations";
@@ -13,10 +14,13 @@ interface NavigationProps {
 }
 
 export default function Navigation({ className = "" }: NavigationProps) {
+  const isStaticMarkup = typeof window === "undefined";
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { lang, toggleLanguage, t } = useLanguage();
+  const homePrefix = location.pathname === "/" ? "" : "/";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,10 +38,10 @@ export default function Navigation({ className = "" }: NavigationProps) {
   };
 
   const navLinks = [
-    { href: "#features", label: t(translations.nav.product) },
-    { href: "#portfolio", label: t(translations.nav.useCases) },
-    { href: "#cta", label: t(translations.nav.pricing) },
-    { href: "#faq", label: t(translations.nav.faq) },
+    { href: `${homePrefix}#solution`, label: t(translations.nav.product) },
+    { href: `${homePrefix}#portfolio`, label: t(translations.nav.useCases) },
+    { href: `${homePrefix}#cta`, label: t(translations.nav.pricing) },
+    { href: `${homePrefix}#faq`, label: t(translations.nav.faq) },
   ];
 
   const navVariants: Variants = {
@@ -96,7 +100,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
   return (
     <motion.header
-      initial="hidden"
+      initial={isStaticMarkup ? false : "hidden"}
       animate="visible"
       variants={navVariants}
       className={cn(
@@ -167,7 +171,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
             <AnimatePresence mode="wait">
               <motion.span
                 key={lang}
-                initial={{ opacity: 0, y: -5 }}
+                initial={isStaticMarkup ? false : { opacity: 0, y: -5 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 5 }}
                 transition={{ duration: 0.15 }}
@@ -193,7 +197,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               {theme === "dark" ? (
                 <motion.div
                   key="sun"
-                  initial={{ opacity: 0, rotate: -90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: -90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: 90 }}
                   transition={{ duration: 0.2 }}
@@ -203,7 +207,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               ) : (
                 <motion.div
                   key="moon"
-                  initial={{ opacity: 0, rotate: 90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: 90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: -90 }}
                   transition={{ duration: 0.2 }}
@@ -255,7 +259,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               {theme === "dark" ? (
                 <motion.div
                   key="sun-mobile"
-                  initial={{ opacity: 0, rotate: -90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: -90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: 90 }}
                   transition={{ duration: 0.2 }}
@@ -265,7 +269,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               ) : (
                 <motion.div
                   key="moon-mobile"
-                  initial={{ opacity: 0, rotate: 90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: 90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: -90 }}
                   transition={{ duration: 0.2 }}
@@ -287,7 +291,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               {isMobileMenuOpen ? (
                 <motion.div
                   key="close"
-                  initial={{ opacity: 0, rotate: -90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: -90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: 90 }}
                   transition={{ duration: 0.2 }}
@@ -297,7 +301,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
               ) : (
                 <motion.div
                   key="menu"
-                  initial={{ opacity: 0, rotate: 90 }}
+                  initial={isStaticMarkup ? false : { opacity: 0, rotate: 90 }}
                   animate={{ opacity: 1, rotate: 0 }}
                   exit={{ opacity: 0, rotate: -90 }}
                   transition={{ duration: 0.2 }}

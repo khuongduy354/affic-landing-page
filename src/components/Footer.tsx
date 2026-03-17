@@ -1,4 +1,4 @@
-import { Linkedin, Facebook, Mail, MapPin, Phone, FileText, BookOpen, Users, Building2 } from "lucide-react";
+import { Linkedin, Facebook, Mail, MapPin, Phone, BookOpen, Building2 } from "lucide-react";
 // FIXED: Changed to a relative path to prevent build errors
 import logo from "../assets/Affic.AI Logo Footer.png";
 import { useLanguage } from "./LanguageProvider";
@@ -6,6 +6,26 @@ import { translations } from "@/translations";
 
 const Footer = () => {
   const { t } = useLanguage();
+  const socialLinks = [
+    { icon: Linkedin, href: "https://www.linkedin.com/company/affic-ai/", label: "LinkedIn" },
+    { icon: Facebook, href: "https://www.facebook.com/afficai/", label: "Facebook" },
+  ];
+  const companyLinks = [
+    { icon: Building2, text: t(translations.footer.aboutUs), href: "/about/" },
+    { icon: BookOpen, text: t(translations.footer.blog), href: "/blog/" },
+  ];
+  const resourceLinks = [
+    { text: t(translations.footer.documentation), href: "/documentation/" },
+    { text: t(translations.footer.apiReference), href: "/api-reference/" },
+    { text: t(translations.footer.integrationGuide), href: "/integration-guide/" },
+    { text: t(translations.footer.caseStudies), href: "/case-studies/" },
+  ];
+  const legalLinks = [
+    { text: t(translations.footer.privacyPolicy), href: "/privacy-policy/" },
+    { text: t(translations.footer.termsOfService), href: "/terms-of-service/" },
+    { text: t(translations.footer.cookiePolicy), href: "/cookie-policy/" },
+  ];
+
   return (
     <footer className="relative py-16 bg-gradient-to-b from-background/95 to-background border-t border-border/30">
       {/* Glassmorphism overlay */}
@@ -27,20 +47,7 @@ const Footer = () => {
 
               {/* Social Links with enhanced styling */}
               <div className="flex items-center gap-6">
-                {[
-                  { icon: Linkedin, href: "https://www.linkedin.com/company/affic-ai/", label: "LinkedIn" },
-                  { icon: Facebook, href: "https://www.facebook.com/afficai/", label: "Facebook" },
-                  { 
-                    // FIXED: The function now accepts props (like className)
-                    icon: ({ className }) => (
-                      <svg viewBox="0 0 24 24" className={className} fill="currentColor">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                      </svg>
-                    ),
-                    href: "https://x.com",
-                    label: "X (formerly Twitter)"
-                  }
-                ].map((social, index) => (
+                {socialLinks.map((social, index) => (
                   <a
                     key={index}
                     href={social.href}
@@ -66,12 +73,12 @@ const Footer = () => {
                   {t(translations.footer.company)}
                 </h3>
                 <ul className="space-y-3">
-                  {[
-                    { icon: Building2, text: t(translations.footer.aboutUs) },
-                    { icon: BookOpen, text: t(translations.footer.blog) },
-                  ].map((item, index) => (
+                  {companyLinks.map((item, index) => (
                     <li key={index}>
-                      <a href="#" className="group flex items-center gap-2 text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
+                      <a
+                        href={item.href}
+                        className="group flex items-center gap-2 text-[15px] text-muted-foreground/90 hover:text-primary transition-colors"
+                      >
                         <item.icon className="w-4 h-4 text-muted-foreground/70 group-hover:text-primary transition-colors" />
                         {item.text}
                       </a>
@@ -86,15 +93,13 @@ const Footer = () => {
                   {t(translations.footer.resources)}
                 </h3>
                 <ul className="space-y-3">
-                  {[
-                    t(translations.footer.documentation),
-                    t(translations.footer.apiReference),
-                    t(translations.footer.integrationGuide),
-                    t(translations.footer.caseStudies)
-                  ].map((text, index) => (
+                  {resourceLinks.map((item, index) => (
                     <li key={index}>
-                      <a href="#" className="text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
-                        {text}
+                      <a
+                        href={item.href}
+                        className="text-[15px] text-muted-foreground/90 hover:text-primary transition-colors"
+                      >
+                        {item.text}
                       </a>
                     </li>
                   ))}
@@ -114,7 +119,7 @@ const Footer = () => {
                     </a>
                   </li>
                   <li>
-                    <a href="tel:+84946500646" className="group flex items-center gap-2 text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
+                    <a href="tel:+84981864991" className="group flex items-center gap-2 text-[15px] text-muted-foreground/90 hover:text-primary transition-colors">
                       <Phone className="w-4 h-4 text-muted-foreground/70 group-hover:text-primary transition-colors" />
                       +84 (981) 864-991
                     </a>
@@ -139,13 +144,13 @@ const Footer = () => {
               &copy; Affic AI. {t(translations.footer.allRights)}
             </p>
             <div className="flex flex-wrap justify-center gap-8">
-              {[t(translations.footer.privacyPolicy), t(translations.footer.termsOfService), t(translations.footer.cookiePolicy)].map((text, index) => (
+              {legalLinks.map((item, index) => (
                 <a
                   key={index}
-                  href="#"
+                  href={item.href}
                   className="text-sm text-muted-foreground/80 hover:text-primary transition-colors"
                 >
-                  {text}
+                  {item.text}
                 </a>
               ))}
             </div>

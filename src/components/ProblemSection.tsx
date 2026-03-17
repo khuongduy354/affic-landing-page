@@ -4,6 +4,8 @@ import { motion, useInView } from "framer-motion";
 import { useLanguage } from "./LanguageProvider";
 import { translations } from "@/translations";
 
+const isStaticMarkup = typeof window === "undefined";
+
 interface ProblemCardProps {
   icon: React.ReactNode;
   title: string;
@@ -18,8 +20,8 @@ function ProblemCard({ icon, title, description, index }: ProblemCardProps) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      initial={isStaticMarkup ? false : { opacity: 0, y: 20 }}
+      animate={isStaticMarkup || inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
       className="bg-card border border-border rounded-xl p-8 hover:border-primary/30 transition-colors h-full md:border-r last:md:border-r-0"
     >
@@ -52,8 +54,8 @@ export default function ProblemSection() {
       <div className="container mx-auto px-6">
         <motion.div
           ref={sectionRef}
-          initial={{ opacity: 0, y: 20 }}
-          animate={sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          initial={isStaticMarkup ? false : { opacity: 0, y: 20 }}
+          animate={isStaticMarkup || sectionInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5 }}
           className="mb-12 md:mb-16"
         >

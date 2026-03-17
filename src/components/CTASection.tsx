@@ -50,6 +50,7 @@ const Modal = ({ isOpen, onClose, children }) => {
 };
 
 const CTASection = () => {
+  const isStaticMarkup = typeof window === "undefined";
   const { t, lang } = useLanguage();
 
   const benefits = translations.cta.benefits.map((b) => {
@@ -146,8 +147,9 @@ const CTASection = () => {
                         <motion.div
                           key={index}
                           className="flex items-start gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
+                          initial={isStaticMarkup ? false : { opacity: 0, x: -20 }}
+                          whileInView={isStaticMarkup ? undefined : { opacity: 1, x: 0 }}
+                          animate={isStaticMarkup ? { opacity: 1, x: 0 } : undefined}
                           transition={{ duration: 0.5, delay: index * 0.1 }}
                           viewport={{ once: true }}
                         >

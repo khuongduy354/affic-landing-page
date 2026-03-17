@@ -20,6 +20,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const toggleLanguage = () => {
     const newLang = lang === "en" ? "vi" : "en";
     setLang(newLang);

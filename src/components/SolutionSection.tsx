@@ -4,6 +4,8 @@ import { useRef } from "react";
 import { useLanguage } from "./LanguageProvider";
 import { translations } from "@/translations";
 
+const isStaticMarkup = typeof window === "undefined";
+
 export default function SolutionSection() {
   const { t } = useLanguage();
   const sectionRef = useRef(null);
@@ -55,8 +57,8 @@ export default function SolutionSection() {
       className="py-20"
       ref={sectionRef}
       variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
+      initial={isStaticMarkup ? false : "hidden"}
+      animate={isStaticMarkup || isInView ? "visible" : "hidden"}
     >
       <motion.div
         className="container mx-auto px-6"
@@ -138,6 +140,8 @@ function NetworkVisual() {
       viewBox="0 0 120 120"
       className="text-primary"
       fill="none"
+      aria-label="Agent network architecture diagram"
+      role="img"
     >
       {/* Center node */}
       <circle cx="60" cy="60" r="12" fill="currentColor" opacity="0.9" />
@@ -210,8 +214,9 @@ function DashboardVisual() {
       <div className="flex gap-4 w-full justify-center">
         <motion.div
           className="flex flex-col items-center gap-1"
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          initial={isStaticMarkup ? false : { scale: 0.8, opacity: 0 }}
+          whileInView={isStaticMarkup ? undefined : { scale: 1, opacity: 1 }}
+          animate={isStaticMarkup ? { scale: 1, opacity: 1 } : undefined}
           transition={{ delay: 0 }}
         >
           <div className="w-4 h-4 rounded-full bg-green-500" />
@@ -219,8 +224,9 @@ function DashboardVisual() {
         </motion.div>
         <motion.div
           className="flex flex-col items-center gap-1"
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          initial={isStaticMarkup ? false : { scale: 0.8, opacity: 0 }}
+          whileInView={isStaticMarkup ? undefined : { scale: 1, opacity: 1 }}
+          animate={isStaticMarkup ? { scale: 1, opacity: 1 } : undefined}
           transition={{ delay: 0.1 }}
         >
           <div className="w-4 h-4 rounded-full bg-green-500" />
@@ -228,8 +234,9 @@ function DashboardVisual() {
         </motion.div>
         <motion.div
           className="flex flex-col items-center gap-1"
-          initial={{ scale: 0.8, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
+          initial={isStaticMarkup ? false : { scale: 0.8, opacity: 0 }}
+          whileInView={isStaticMarkup ? undefined : { scale: 1, opacity: 1 }}
+          animate={isStaticMarkup ? { scale: 1, opacity: 1 } : undefined}
           transition={{ delay: 0.2 }}
         >
           <div className="w-4 h-4 rounded-full bg-green-500" />
@@ -242,8 +249,9 @@ function DashboardVisual() {
         <div className="h-2 bg-muted/60 rounded-full overflow-hidden">
           <motion.div
             className="h-full bg-primary rounded-full"
-            initial={{ width: 0 }}
-            whileInView={{ width: "85%" }}
+            initial={isStaticMarkup ? false : { width: 0 }}
+            whileInView={isStaticMarkup ? undefined : { width: "85%" }}
+            animate={isStaticMarkup ? { width: "85%" } : undefined}
             transition={{ duration: 1, delay: 0.3 }}
           />
         </div>
@@ -270,8 +278,9 @@ function DeploymentVisual() {
         <motion.div
           key={index}
           className="flex flex-col items-center gap-2"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={isStaticMarkup ? false : { opacity: 0, y: 10 }}
+          whileInView={isStaticMarkup ? undefined : { opacity: 1, y: 0 }}
+          animate={isStaticMarkup ? { opacity: 1, y: 0 } : undefined}
           transition={{ delay: index * 0.15 }}
         >
           {/* Step circle */}
@@ -292,11 +301,12 @@ function DeploymentVisual() {
                 left: `calc(50% + 24px)`,
                 marginTop: "-32px",
               }}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={isStaticMarkup ? false : { opacity: 0 }}
+              whileInView={isStaticMarkup ? undefined : { opacity: 1 }}
+              animate={isStaticMarkup ? { opacity: 1 } : undefined}
               transition={{ delay: index * 0.15 + 0.1 }}
             >
-              <svg width="20" height="8" viewBox="0 0 20 8" fill="none">
+              <svg width="20" height="8" viewBox="0 0 20 8" fill="none" aria-label="Deployment step arrow" role="img">
                 <path
                   d="M0 4h16M16 4l3-3m0 6l-3-3"
                   stroke="currentColor"

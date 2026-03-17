@@ -25,6 +25,7 @@ import type { LucideIcon } from "lucide-react";
 const icons = [Plane, Star, MessageSquare, Mail, Video, Linkedin, FileText, Search];
 
 export default function PortfolioSection() {
+  const isStaticMarkup = typeof window === "undefined";
   const { t } = useLanguage();
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
@@ -78,8 +79,8 @@ export default function PortfolioSection() {
         className="py-20 bg-muted/30 overflow-hidden"
         ref={sectionRef}
         variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
+        initial={isStaticMarkup ? false : "hidden"}
+        animate={isStaticMarkup || isInView ? "visible" : "hidden"}
       >
         <motion.div className="container mx-auto px-6" variants={containerVariants}>
           {/* Heading + subtitle — full width */}
