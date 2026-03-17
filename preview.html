@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Affic AI - Redesigned Landing Page Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #ffffff;
+    --fg: #171717;
+    --card: #fafafa;
+    --card-fg: #171717;
+    --primary: #1a9d5c;
+    --primary-fg: #ffffff;
+    --muted: #f5f5f5;
+    --muted-fg: #737373;
+    --border: #e5e5e5;
+    --gradient-start: #1a9d5c;
+    --gradient-end: #2191c4;
+  }
+
+  .dark {
+    --bg: #121212;
+    --fg: #ededed;
+    --card: #1c1c1c;
+    --card-fg: #ededed;
+    --primary: #22c55e;
+    --primary-fg: #ffffff;
+    --muted: #262626;
+    --muted-fg: #a3a3a3;
+    --border: #2e2e2e;
+    --gradient-start: #22c55e;
+    --gradient-end: #38bdf8;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--fg);
+    line-height: 1.6;
+  }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+  .gradient-text {
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(18,18,18,0.8); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 0;
+  }
+  .nav .container { display: flex; justify-content: space-between; align-items: center; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { color: var(--muted-fg); text-decoration: none; font-size: 14px; font-weight: 500; }
+  .nav-links a:hover { color: var(--fg); }
+  .nav-right { display: flex; gap: 16px; align-items: center; }
+  .theme-btn { background: none; border: none; color: var(--fg); cursor: pointer; padding: 8px; border-radius: 8px; }
+  .theme-btn:hover { background: var(--muted); }
+  .cta-btn {
+    background: #16a34a; color: white; border: none;
+    padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+  }
+  .cta-btn:hover { background: #15803d; }
+  .cta-btn-lg { padding: 14px 32px; font-size: 16px; border-radius: 10px; }
+  .cta-btn-outline {
+    background: transparent; color: var(--fg); border: 1px solid var(--border);
+    padding: 14px 32px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer;
+  }
+  .logo-text { font-size: 20px; font-weight: 800; color: var(--fg); }
+  .logo-text span { color: var(--primary); }
+
+  /* Hero */
+  .hero {
+    padding: 140px 0 80px; text-align: center;
+    background-image: radial-gradient(circle at top, rgba(34,197,94,0.06) 0%, transparent 50%);
+  }
+  .hero h1 { font-size: clamp(40px, 6vw, 72px); font-weight: 900; line-height: 1.1; }
+  .hero .subtitle { font-size: 18px; color: var(--muted-fg); margin-top: 20px; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .hero .buttons { display: flex; gap: 16px; justify-content: center; margin-top: 40px; flex-wrap: wrap; }
+
+  /* Feature Tabs */
+  .tabs {
+    display: flex; gap: 4px; justify-content: center; margin-top: 60px;
+    border-bottom: 1px solid var(--border); flex-wrap: wrap;
+  }
+  .tab {
+    display: flex; align-items: center; gap: 8px; padding: 12px 20px 16px;
+    background: none; border: none; cursor: pointer;
+    color: var(--muted-fg); font-size: 14px; font-weight: 500;
+    position: relative;
+  }
+  .tab.active { color: var(--fg); }
+  .tab.active::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+    height: 3px; background: var(--primary); border-radius: 3px 3px 0 0;
+  }
+  .tab-icon { width: 18px; height: 18px; }
+
+  .tab-content { text-align: center; margin-top: 24px; }
+  .tab-content p { color: var(--muted-fg); font-size: 16px; }
+
+  /* Mockup Card */
+  .mockup {
+    background: #0a0a0a; border: 1px solid #262626; border-radius: 16px;
+    padding: 24px; margin-top: 24px; text-align: left;
+  }
+  .mockup-header { display: flex; gap: 8px; margin-bottom: 24px; }
+  .mockup-dot { width: 12px; height: 12px; border-radius: 50%; }
+  .mockup-dot.red { background: rgba(239,68,68,0.5); }
+  .mockup-dot.yellow { background: rgba(234,179,8,0.5); }
+  .mockup-dot.green { background: rgba(34,197,94,0.5); }
+  .workflow-nodes { display: flex; gap: 24px; align-items: center; justify-content: center; padding: 40px 0; flex-wrap: wrap; }
+  .workflow-node {
+    padding: 12px 20px; border-radius: 10px; text-align: center; min-width: 120px;
+  }
+  .workflow-node.trigger { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.4); }
+  .workflow-node.process { background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.4); }
+  .workflow-node.action { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.4); }
+  .workflow-node .label { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+  .workflow-node.trigger .label { color: #34d399; }
+  .workflow-node.process .label { color: #60a5fa; }
+  .workflow-node.action .label { color: #c084fc; }
+  .workflow-node .value { font-size: 14px; color: #cbd5e1; margin-top: 4px; }
+  .workflow-arrow { color: #4b5563; font-size: 24px; }
+
+  /* Stats */
+  .stats {
+    border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 48px 0;
+  }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); max-width: 900px; margin: 0 auto; }
+  .stat { text-align: center; padding: 16px; }
+  .stat:not(:last-child) { border-right: 1px solid var(--border); }
+  .stat .number { font-size: 36px; font-weight: 700; color: var(--fg); }
+  .stat .label { font-size: 13px; color: var(--muted-fg); margin-top: 4px; }
+
+  /* Problem Section */
+  .problem { padding: 80px 0; }
+  .problem h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; margin-bottom: 48px; }
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+  .problem-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 32px;
+  }
+  .problem-card:not(:last-child) { border-right: 1px solid var(--border); border-radius: 16px 0 0 16px; }
+  .problem-card:last-child { border-radius: 0 16px 16px 0; }
+  .problem-card:nth-child(2) { border-radius: 0; }
+  .problem-icon {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--muted);
+    display: flex; align-items: center; justify-content: center; margin-bottom: 24px;
+    font-size: 20px;
+  }
+  .problem-card h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+  .problem-card p { color: var(--muted-fg); font-size: 14px; line-height: 1.6; }
+
+  /* Solution Section */
+  .solution { padding: 80px 0; }
+  .solution h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; text-align: center; }
+  .solution .subtitle { color: var(--muted-fg); text-align: center; max-width: 640px; margin: 16px auto 48px; }
+  .solution-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .solution-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+    padding: 24px; overflow: hidden;
+  }
+  .solution-visual {
+    height: 160px; background: var(--muted); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .solution-card h3 { font-size: 16px; font-weight: 700; display: flex; align-items: center; gap: 10px; }
+  .solution-card h3 .icon {
+    width: 32px; height: 32px; border-radius: 8px; background: rgba(34,197,94,0.1);
+    display: flex; align-items: center; justify-content: center; color: var(--primary); font-size: 16px;
+  }
+  .solution-card p { color: var(--muted-fg); font-size: 13px; margin-top: 8px; line-height: 1.6; }
+
+  /* Portfolio */
+  .portfolio { padding: 80px 0; background: var(--muted); }
+  .portfolio h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; }
+  .portfolio .subtitle { color: var(--muted-fg); max-width: 480px; margin-top: 16px; }
+
+  /* CTA */
+  .cta-section { padding: 80px 0; }
+  .cta-box {
+    background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+    padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+  }
+  .cta-box h2 { font-size: 36px; font-weight: 700; }
+  .cta-box .sub { color: var(--muted-fg); margin-top: 16px; font-size: 16px; }
+  .benefit-list { list-style: none; padding: 0; }
+  .benefit-list li { display: flex; gap: 12px; margin-bottom: 16px; color: var(--muted-fg); }
+  .benefit-list li::before { content: '✓'; color: var(--primary); font-weight: 700; }
+  .cta-bottom { grid-column: 1 / -1; text-align: center; padding-top: 32px; border-top: 1px solid var(--border); }
+
+  /* FAQ */
+  .faq { padding: 80px 0; }
+  .faq h2 { font-size: clamp(28px, 4vw, 48px); font-weight: 700; margin-bottom: 32px; }
+  .faq-item {
+    background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+    padding: 20px 24px; margin-bottom: 12px; cursor: pointer;
+  }
+  .faq-item:hover { border-color: rgba(34,197,94,0.3); }
+  .faq-q { font-weight: 600; font-size: 16px; }
+
+  /* Footer */
+  .footer { padding: 64px 0; border-top: 1px solid var(--border); }
+  .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 32px; }
+  .footer p { color: var(--muted-fg); font-size: 14px; line-height: 1.6; }
+  .footer h4 { font-weight: 600; margin-bottom: 16px; }
+  .footer a { color: var(--muted-fg); text-decoration: none; font-size: 14px; display: block; margin-bottom: 8px; }
+  .footer a:hover { color: var(--primary); }
+  .footer-bottom { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; }
+  .footer-bottom span { color: var(--muted-fg); font-size: 13px; }
+
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat:nth-child(2) { border-right: none; }
+    .problem-grid, .solution-grid { grid-template-columns: 1fr; }
+    .problem-card, .problem-card:not(:last-child), .problem-card:last-child, .problem-card:nth-child(2) { border-radius: 16px; border-right: 1px solid var(--border); }
+    .cta-box { grid-template-columns: 1fr; padding: 32px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<script>
+function toggleTheme() {
+  document.documentElement.classList.toggle('dark');
+}
+</script>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="container">
+    <div class="logo-text">Affic <span>AI</span></div>
+    <div class="nav-links">
+      <a href="#features">Product</a>
+      <a href="#portfolio">Use Cases</a>
+      <a href="#cta">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-right">
+      <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">&#9681;</button>
+      <button class="cta-btn">Book a Free Demo</button>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="features">
+  <div class="container">
+    <h1>AI automation that actually <span class="gradient-text">works.</span></h1>
+    <p class="subtitle">Build collaborative AI teams that think, talk, and work together. Deploy your own AI departments in minutes — no code required.</p>
+    <div class="buttons">
+      <button class="cta-btn cta-btn-lg">Book a Free Demo</button>
+      <button class="cta-btn-outline">See Use Cases</button>
+    </div>
+
+    <!-- Feature Tabs -->
+    <div class="tabs">
+      <button class="tab active" onclick="setTab(this)">&#x1F4C8; Growth Engine</button>
+      <button class="tab" onclick="setTab(this)">&#x1F4C4; Content Factory</button>
+      <button class="tab" onclick="setTab(this)">&#x1F4AC; Sales Autopilot</button>
+      <button class="tab" onclick="setTab(this)">&#x1F4E6; Operations Hub</button>
+      <button class="tab" onclick="setTab(this)">&#x1F4F1; Media Manager</button>
+    </div>
+    <div class="tab-content">
+      <p>Automate lead generation, qualification, and nurturing to scale your business effortlessly.</p>
+    </div>
+
+    <!-- Mockup -->
+    <div class="mockup">
+      <div class="mockup-header">
+        <div class="mockup-dot red"></div>
+        <div class="mockup-dot yellow"></div>
+        <div class="mockup-dot green"></div>
+        <span style="margin-left: auto; font-size: 12px; color: #64748b;">Growth Engine Dashboard</span>
+      </div>
+      <div class="workflow-nodes">
+        <div class="workflow-node trigger">
+          <div class="label">Trigger</div>
+          <div class="value">New Lead</div>
+        </div>
+        <div class="workflow-arrow">&rarr;</div>
+        <div class="workflow-node process">
+          <div class="label">Process</div>
+          <div class="value">AI Agent</div>
+        </div>
+        <div class="workflow-arrow">&rarr;</div>
+        <div class="workflow-node action">
+          <div class="label">Action</div>
+          <div class="value">Qualify & Route</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; margin-top: 16px;">
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite;"></div>
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #3b82f6; animation: pulse 2s infinite 0.3s;"></div>
+        <div style="width: 8px; height: 8px; border-radius: 50%; background: #a855f7; animation: pulse 2s infinite 0.6s;"></div>
+        <span style="font-size: 12px; color: #64748b;">3 agents active</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat"><div class="number">70%</div><div class="label">Average email open rate</div></div>
+    <div class="stat"><div class="number">200+</div><div class="label">Flights processed daily</div></div>
+    <div class="stat"><div class="number">24/7</div><div class="label">Autonomous operation</div></div>
+    <div class="stat"><div class="number">80%</div><div class="label">Cost reduction</div></div>
+  </div>
+</section>
+
+<!-- Problem -->
+<section class="problem">
+  <div class="container">
+    <h2>Why Most AI Automation Fails</h2>
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">&#x1F50C;</div>
+        <h3>Disconnected Tools</h3>
+        <p>You're juggling multiple AI tools that don't talk to each other. One API change breaks the entire chain, and you're stuck debugging instead of growing.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">&#x1F4CA;</div>
+        <h3>No Real Visibility</h3>
+        <p>Your automations 'silently fail' and you only find out when a client complains. There's no dashboard, no alerts — just hope that things are still running.</p>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">&#x1F9E9;</div>
+        <h3>Requires Technical Expertise</h3>
+        <p>Building reliable automation still means dealing with node errors, API limits, and complex integrations. It shouldn't take a developer to automate a workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Solution -->
+<section class="solution">
+  <div class="container">
+    <h2>How Affic AI Solves This</h2>
+    <p class="subtitle">Our Agent-to-Agent (A2A) technology lets your AI agents communicate, share context, and collaborate — like a real team.</p>
+    <div class="solution-grid">
+      <div class="solution-card">
+        <div class="solution-visual">
+          <svg width="120" height="120" viewBox="0 0 120 120" fill="none">
+            <circle cx="60" cy="60" r="12" fill="var(--primary)" opacity="0.9"/>
+            <circle cx="30" cy="30" r="10" fill="var(--primary)" opacity="0.5"/>
+            <circle cx="90" cy="30" r="10" fill="var(--primary)" opacity="0.5"/>
+            <circle cx="30" cy="90" r="10" fill="var(--primary)" opacity="0.5"/>
+            <line x1="60" y1="60" x2="30" y2="30" stroke="var(--primary)" stroke-width="2" opacity="0.3"/>
+            <line x1="60" y1="60" x2="90" y2="30" stroke="var(--primary)" stroke-width="2" opacity="0.3"/>
+            <line x1="60" y1="60" x2="30" y2="90" stroke="var(--primary)" stroke-width="2" opacity="0.3"/>
+          </svg>
+        </div>
+        <h3><span class="icon">&#x1F517;</span> One Connected System</h3>
+        <p>All your AI agents work in one ecosystem. They share data, pass tasks, and coordinate automatically — no manual glue code needed.</p>
+      </div>
+      <div class="solution-card">
+        <div class="solution-visual" style="flex-direction: column; gap: 12px;">
+          <div style="display: flex; gap: 16px;">
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="width: 16px; height: 16px; border-radius: 50%; background: #22c55e;"></div>
+              <span style="font-size: 11px; color: var(--muted-fg);">Ready</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="width: 16px; height: 16px; border-radius: 50%; background: #22c55e;"></div>
+              <span style="font-size: 11px; color: var(--muted-fg);">Running</span>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+              <div style="width: 16px; height: 16px; border-radius: 50%; background: #22c55e;"></div>
+              <span style="font-size: 11px; color: var(--muted-fg);">Stable</span>
+            </div>
+          </div>
+          <div style="width: 80%; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;">
+            <div style="width: 85%; height: 100%; background: var(--primary); border-radius: 4px;"></div>
+          </div>
+          <span style="font-size: 11px; color: var(--muted-fg);">85% Healthy</span>
+        </div>
+        <h3><span class="icon">&#x1F6E1;</span> Self-Healing Workflows</h3>
+        <p>Built-in monitoring catches errors before you do. Agents auto-retry, self-correct, and alert you only when human input is truly needed.</p>
+      </div>
+      <div class="solution-card">
+        <div class="solution-visual" style="gap: 16px;">
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); opacity: 0.5; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--primary);">1</div>
+            <span style="font-size: 11px; color: var(--muted-fg);">Select</span>
+          </div>
+          <span style="color: var(--muted-fg);">&rarr;</span>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); opacity: 0.5; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--primary);">2</div>
+            <span style="font-size: 11px; color: var(--muted-fg);">Configure</span>
+          </div>
+          <span style="color: var(--muted-fg);">&rarr;</span>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+            <div style="width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--primary); opacity: 0.5; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: var(--primary);">3</div>
+            <span style="font-size: 11px; color: var(--muted-fg);">Deploy</span>
+          </div>
+        </div>
+        <h3><span class="icon">&#x1F680;</span> No-Code Deployment</h3>
+        <p>Pick a department, customize your settings, and deploy. Your AI team is live in minutes — zero technical skills required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <h2>Get in <span class="gradient-text">Early</span></h2>
+        <p class="sub">We're building collaborative AI squads that think, talk, and work together. This early access program is designed for leaders who want to move fast.</p>
+      </div>
+      <div>
+        <h3 style="font-weight: 600; margin-bottom: 20px;">When you pre-order, you'll get:</h3>
+        <ul class="benefit-list">
+          <li>A 1-on-1 strategy session with a Top 10% AI Automation Expert</li>
+          <li>Early access before public launch</li>
+          <li>Full access to all available A2A Departments</li>
+          <li>A done-for-you setup</li>
+          <li>Dedicated support from our experts</li>
+        </ul>
+      </div>
+      <div class="cta-bottom">
+        <button class="cta-btn cta-btn-lg" style="width: 100%; max-width: 480px;">PRE-ORDER NOW — Get 10% OFF at Launch &rarr;</button>
+        <p style="margin-top: 12px; font-size: 13px; color: var(--muted-fg);">...or <a href="#" style="color: var(--primary); text-decoration: underline;">book a 30-minute demo</a> to see how it works first.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container" style="max-width: 800px;">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-item"><div class="faq-q">What is A2A?</div></div>
+    <div class="faq-item"><div class="faq-q">My business is unique. Will your templates work for me?</div></div>
+    <div class="faq-item"><div class="faq-q">Will I lose control of my AI business?</div></div>
+    <div class="faq-item"><div class="faq-q">Why pay you instead of building it myself?</div></div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="logo-text" style="margin-bottom: 16px;">Affic <span>AI</span></div>
+        <p>Affic AI is the no-code platform that empowers you to build and deploy an entire AI workforce.</p>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About Us</a>
+        <a href="#">Blog</a>
+      </div>
+      <div>
+        <h4>Resources</h4>
+        <a href="#">Documentation</a>
+        <a href="#">API Reference</a>
+        <a href="#">Case Studies</a>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <a href="#">jin@afficai.com</a>
+        <a href="#">+84 (981) 864-991</a>
+        <span style="font-size: 14px; color: var(--muted-fg);">Ho Chi Minh City, Vietnam</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; Affic AI. All Rights Reserved.</span>
+      <span>Privacy Policy &middot; Terms of Service</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.5); } }
+</style>
+<script>
+function setTab(el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -27,6 +27,7 @@ export default function StatsSection() {
   return (
     <section ref={ref} className="border-t border-b border-border py-16">
       <div className="max-w-5xl mx-auto px-6">
+        <h2 className="sr-only">Our Impact in Numbers</h2>
         <div className="grid grid-cols-2 md:grid-cols-4">
           {stats.map((stat, index) => (
             <div
