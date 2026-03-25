@@ -220,7 +220,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
 
           {/* CTA Button */}
           <motion.a
-            href="https://cal.com/jin-nguyen-affic-ai/30min?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWEh0M3VOS3d3NDVnUHlxcHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR6crA86p2JL2aCw9-k8AhAWvlHzFvfUAmThiipKQ3HAJHBCwVpd23KK9NW0dQ_aem_MjLL-fKKfo-QLSBq_B2uKQ"
+            href="https://cal.com/nguyen-jin-f1iwjw/30min"
             target="_blank"
             rel="noopener noreferrer"
             variants={itemVariants}
@@ -342,7 +342,7 @@ export default function Navigation({ className = "" }: NavigationProps) {
                   className="pt-4 border-t border-border/50"
                 >
                   <motion.a
-                    href="https://cal.com/jin-nguyen-affic-ai/30min?fbclid=IwZXh0bgNhZW0CMTAAYnJpZBExWEh0M3VOS3d3NDVnUHlxcHNydGMGYXBwX2lkEDIyMjAzOTE3ODgyMDA4OTIAAR6crA86p2JL2aCw9-k8AhAWvlHzFvfUAmThiipKQ3HAJHBCwVpd23KK9NW0dQ_aem_MjLL-fKKfo-QLSBq_B2uKQ"
+                    href="https://cal.com/nguyen-jin-f1iwjw/30min"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block"
